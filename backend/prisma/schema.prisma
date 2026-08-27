@@ -14,15 +14,56 @@ model User {
   createdAt DateTime @default(now())
 
   resumes   Resume[]
+  Jobdescriptions JobDescription[]
+  analyses        Analysis[]
 }
 
 model Resume {
   id              String @id @default(cuid())
-  UserId          String
+  userId          String
   fileName        String
   fileType        String
   extractedText   String
   createdAt       DateTime @default(now())
 
-  User User @relation(fields: [UserId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  analyses  Analysis[]
+}
+
+model JobDescription {
+  id          String @id @default(cuid())
+  userId      String
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  analyses  Analysis[]
+}
+
+model Analysis {
+  id               String   @id @default(cuid())
+  userId           String
+  resumeId         String
+  jobDescriptionId String
+
+  skillScore       Int
+  keywordScore     Int
+  score            Int
+
+  matchedSkills    Json
+  missingSkills    Json
+  matchedKeywords  Json
+  missingKeywords  Json
+
+
+  //Gemini's Analysis.
+  //The ? means this field is optional
+  aiAnalysis       Json?
+
+  createdAt        DateTime @default(now())
+
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  resume         Resume         @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  jobDescription JobDescription @relation(fields: [jobDescriptionId], references: [id], onDelete: Cascade)
 }
