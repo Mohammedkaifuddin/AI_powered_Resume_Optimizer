@@ -1,6 +1,8 @@
 // Base URL of our Express backend.
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
+console.log("BACKEND API URL:", API_URL);
 // Custom error that keeps the HTTP status.
 export class ApiError extends Error {
   status: number;
