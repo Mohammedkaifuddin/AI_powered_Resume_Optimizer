@@ -3,6 +3,7 @@
 // useState lets us store what the user types.
 import { useState } from "react";
 import Link from "next/link";
+import { apiRequest } from "@/lib/api";
 
 export default function RegisterPage() {
   // Store user's name.
@@ -33,7 +34,7 @@ export default function RegisterPage() {
 
     try {
       // Send registration request to our Express backend.
-      const response = await fetch("http://localhost:5000/api/auth/register", {
+      const response = await apiRequest("/api/auth/register", {
         // Our backend expects POST.
         method: "POST",
 

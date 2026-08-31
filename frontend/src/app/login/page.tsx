@@ -4,6 +4,7 @@
 // useState lets us remember values typed into the form.
 import { useState } from "react";
 import Link from "next/link";
+import { apiRequest } from "@/lib/api";
 
 export default function LoginPage() {
   // Store the email entered by the user.
@@ -20,73 +21,41 @@ export default function LoginPage() {
 
   // This function runs when the user submits the form.
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    // Stop the browser from refreshing the page.
     event.preventDefault();
 
-    // Remove any previous error.
     setError("");
-
-    // Show loading state.
     setLoading(true);
 
     try {
-      // Send login request to our Express backend.
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        // Our backend expects POST.
+      const data = await apiRequest("/api/auth/login", {
         method: "POST",
-
-        // Tell the backend that we're sending JSON.
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        // Convert our JavaScript object into JSON text.
         body: JSON.stringify({
           email,
           password,
         }),
       });
 
-      // Convert the backend response from JSON text
-      // into a JavaScript object.
-      const data = await response.json();
-
       console.log("Login response:", data);
 
-      // Check whether the backend says login failed.
-      if (!response.ok) {
-        // Show the backend error message.
+      if (!data.success) {
         setError(data.message || "Login failed");
-
-        // Stop here.
         return;
       }
 
-      //check that the backend actually returned a token
-      if(!data.token){
+      if (!data.token) {
         setError("Login succeeded but no token was returned");
         return;
       }
 
-      //store the jwt in the current browser session.
-      //sessionStorage is available only in the browser
-      //which is why this page is a client component
-
       sessionStorage.setItem("token", data.token);
 
-      console.log("Token saved: ",!!sessionStorage.getItem("token"))
+      console.log("Token saved:", !!sessionStorage.getItem("token"));
 
-      //send the user to the dashboard
       window.location.href = "/dashboard";
-
     } catch (error) {
-      // This catches network errors.
       console.error("Login request failed:", error);
-
-      // Show a user-friendly message.
       setError("Unable to connect to the server");
     } finally {
-      // Stop the loading state.
       setLoading(false);
     }
   };
@@ -154,8 +123,11 @@ export default function LoginPage() {
 
           {/* Link to the registration page. */}
           <p className="mt-5 text-center text-sm text-gray-600">
-             Don&apos;t have an account?{" "}
-            <Link href="/register" className="font-medium text-grey-600 underline">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/register"
+              className="font-medium text-grey-600 underline"
+            >
               Register
             </Link>
           </p>

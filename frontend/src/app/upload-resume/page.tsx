@@ -6,6 +6,8 @@ import { useState } from "react";
 // Next.js Link lets the user go back to the dashboard.
 import Link from "next/link";
 
+import { apiRequest } from "@/lib/api";
+
 export default function UploadResumePage() {
   // Store the selected resume file.
   const [file, setFile] = useState<File | null>(null);
@@ -91,8 +93,8 @@ export default function UploadResumePage() {
       // ------------------------------------------------------
 
       // Send the resume to Express.
-      const response = await fetch(
-        "http://localhost:5000/api/resumes/upload",
+      const response = await apiRequest(
+        "/api/resumes/upload",
         {
           // Backend expects POST.
           method: "POST",

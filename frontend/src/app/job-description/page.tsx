@@ -5,6 +5,7 @@ import { useState } from "react";
 
 // Next.js Link allows navigation back to the dashboard.
 import Link from "next/link";
+import { apiRequest } from "@/lib/api";
 
 export default function JobDescriptionPage() {
   // ==========================================================
@@ -78,8 +79,8 @@ export default function JobDescriptionPage() {
       // ======================================================
 
       // Send POST request to our backend.
-      const response = await fetch(
-        "http://localhost:5000/api/job-descriptions",
+      const response = await apiRequest(
+        "/api/job-descriptions",
         {
           // Backend expects POST.
           method: "POST",

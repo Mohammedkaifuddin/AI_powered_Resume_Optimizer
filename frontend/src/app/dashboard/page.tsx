@@ -233,8 +233,8 @@ export default function DashboardPage() {
     setdeleteerror("");
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/resumes/${resumeId}`,
+      const response = await apiRequest(
+        `/api/resumes/${resumeId}`,
         {
           method: "DELETE",
           headers: {
@@ -321,8 +321,8 @@ export default function DashboardPage() {
     setjobdeleteerror("");
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/job-descriptions/${jobId}`,
+      const response = await apiRequest(
+        `/api/job-descriptions/${jobId}`,
         {
           method: "DELETE",
           headers: {
@@ -390,8 +390,8 @@ export default function DashboardPage() {
     setDeletingAnalysisId(analysisId);
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/analyses/${analysisId}`,
+      const response = await apiRequest(
+        `/api/analyses/${analysisId}`,
         {
           method: "DELETE",
           headers: {
@@ -458,8 +458,8 @@ export default function DashboardPage() {
     try {
       const [oldId, newId] = selectedanalysisids;
 
-      const response = await fetch(
-        `http://localhost:5000/api/analyses/compare/${oldId}/${newId}`,
+      const response = await apiRequest(
+        `/api/analyses/compare/${oldId}/${newId}`,
         {
           method: "GET",
           headers: {
@@ -987,8 +987,8 @@ export default function DashboardPage() {
                 }
 
                 // Send selected resume and job to backend.
-                const response = await fetch(
-                  "http://localhost:5000/api/matching/analyze",
+                const response = await apiRequest(
+                  "/api/matching/analyze",
                   {
                     // Backend expects POST.
                     method: "POST",
