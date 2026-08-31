@@ -1,7 +1,7 @@
 # AI-Powered Resume Optimizer
 
 An AI-powered full-stack web application that analyzes resumes against job descriptions, calculates match scores, identifies missing skills and keywords, and provides AI-powered recommendations using Google Gemini.
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🚀 Features
 
 - User registration and login
@@ -20,7 +20,7 @@ An AI-powered full-stack web application that analyzes resumes against job descr
 - Delete resumes, job descriptions, and analyses
 - Protected API routes
 - File validation and upload limits
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -45,7 +45,7 @@ An AI-powered full-stack web application that analyzes resumes against job descr
 ### Authentication
 - JWT
 - bcrypt
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🏗️ Architecture
 
 
@@ -70,7 +70,7 @@ Express REST API
        ▼
    PostgreSQL / Neon
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🔄 Application Workflow
 
 
@@ -94,7 +94,7 @@ Analysis History
        ↓
 Compare Analyses
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 📊 Scoring
 
 The current rule-based matcher calculates:
@@ -112,10 +112,12 @@ The system identifies:
 * Matched keywords
 * Missing keywords
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🤖 AI Analysis
 
 Google Gemini analyzes the resume and job description to provide additional recommendations and insights for improving the candidate's resume.
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🔐 Security
 
 * JWT-based authentication
@@ -128,6 +130,7 @@ Google Gemini analyzes the resume and job description to provide additional reco
 * 5 MB upload limit
 * Global API error handling
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## ⚙️ Local Setup
 
 ### Backend
@@ -180,7 +183,7 @@ Frontend runs on:
 
 http://localhost:3000
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🏭 Production Build
 
 Backend:
@@ -194,7 +197,7 @@ Frontend:
 cd frontend
 npm run build
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🔮 Future Improvements
 
 * ATS compatibility score
@@ -206,6 +209,7 @@ npm run build
 * Automated testing
 * Production deployment
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 👨‍💻 Author
 
 **Mohammed Kaifuddin**
