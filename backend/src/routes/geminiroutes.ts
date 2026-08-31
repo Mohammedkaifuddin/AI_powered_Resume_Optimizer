@@ -1,20 +1,41 @@
 import { Router } from "express";
-import { testGemini } from "../services/geminiservice";
+import { authmiddleware } from "../middleware/authmiddleware";
+import { analyzeresumewithgemini } from "../services/geminiservice";
 
 const router = Router();
 
-router.get("/test", async(req, resizeBy, next) => {
-    try{
-        const response = await testGemini();
+router.post(
+  "/analyze",
+  authmiddleware,
+  async (req, res, next) => {
+    try {
+      const { resumeText, jobDescription } = req.body;
 
-        return resizeBy.status(200).json({
-            success: true,
-            response,
+      if (
+        typeof resumeText !== "string" ||
+        typeof jobDescription !== "string"
+      ) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "resumeText and jobDescription are required",
         });
-    }catch(error){
-        console.error("Gemini error: ", error);
-        next(error);
+      }
+
+      const response = await analyzeresumewithgemini(
+        resumeText,
+        jobDescription,
+      );
+
+      return res.status(200).json({
+        success: true,
+        response,
+      });
+    } catch (error) {
+      console.error("Gemini error:", error);
+      next(error);
     }
-});
+  },
+);
 
 export default router;

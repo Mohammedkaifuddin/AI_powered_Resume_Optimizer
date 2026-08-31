@@ -59,10 +59,21 @@ const keywords = [
 const normalizeText = (text: string): string => {
   return text
     .toLowerCase()
+    .replace(/[^\w+#.]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 };
 
+const normalizeSkill = (skill: string): string => {
+  return normalizeText(skill)
+    .replace(/\bapis\b/g, "api")
+    .replace(/\bapi\b/g, "api")
+    .replace(/\bpostgres\b/g, "postgresql")
+    .replace(/\bpostgresql\b/g, "postgresql")
+    .replace(/\bspringboot\b/g, "spring boot")
+    .replace(/\bmicroservices\b/g, "microservice")
+    .replace(/\bmicroservice\b/g, "microservice");
+};
 
 // ------------------------------------------------------------
 // CHECK FOR A SKILL
@@ -75,8 +86,8 @@ const containsSkill = (
 ): boolean => {
 
   // Normalize both values before comparing.
-  const normalizedText = normalizeText(text);
-  const normalizedSkill = normalizeText(skill);
+  const normalizedText = normalizeSkill(text);
+  const normalizedSkill = normalizeSkill(skill);
 
   // Skills containing special characters need
   // simpler matching.

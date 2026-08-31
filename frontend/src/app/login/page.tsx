@@ -117,7 +117,7 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              placeholder="kaif@example.com"
+              placeholder="Enter your email id"
               className="w-full rounded-md border px-3 py-2"
               required
             />

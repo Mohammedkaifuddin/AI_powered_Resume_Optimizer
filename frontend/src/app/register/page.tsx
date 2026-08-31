@@ -101,7 +101,7 @@ export default function RegisterPage() {
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              placeholder="Kaif"
+              placeholder="Enter your name"
               className="w-full rounded-md border px-3 py-2"
               required
             />
@@ -118,7 +118,7 @@ export default function RegisterPage() {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              placeholder="kaif@example.com"
+              placeholder="Enter your email id"
               className="w-full rounded-md border px-3 py-2"
               required
             />

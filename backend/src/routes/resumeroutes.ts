@@ -55,8 +55,8 @@ router.post(
 );
 
 
-
-// router.get("/", authmiddleware, getMyResumes);
+//Get all resumes belonging to the logged-in user.
+router.get("/", authmiddleware, getMyResumes);
 router.get("/:id", authmiddleware, getresumebyid);
 router.delete("/:id", authmiddleware, deleteresumes);
 

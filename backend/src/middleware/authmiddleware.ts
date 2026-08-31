@@ -1,51 +1,81 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-
 export const authmiddleware = (
-    req: Request,
-    res: Response,
-    next: NextFunction
+  req: Request,
+  res: Response,
+  next: NextFunction,
 ) => {
-    const authHeader = req.headers.authorization;
+  // ------------------------------------------------------
+  // 1. Check JWT secret
+  // ------------------------------------------------------
 
-    if(!authHeader){
-        return res.status(401).json({
-            success: false,
-            message: "Authentication required",
-        });
+  const jwtSecret = process.env.JWT_SECRET;
+
+  if (!jwtSecret) {
+    console.error("JWT_SECRET is not configured.");
+
+    return res.status(500).json({
+      success: false,
+      message: "Server authentication configuration error",
+    });
+  }
+
+  // ------------------------------------------------------
+  // 2. Get Authorization header
+  // ------------------------------------------------------
+
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({
+      success: false,
+      message: "Authentication required",
+    });
+  }
+
+  // ------------------------------------------------------
+  // 3. Validate Bearer token
+  // ------------------------------------------------------
+
+  const [schema, token] = authHeader.split(" ");
+
+  if (schema !== "Bearer" || !token) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid authorization header",
+    });
+  }
+
+  // ------------------------------------------------------
+  // 4. Verify token
+  // ------------------------------------------------------
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+
+    if (
+      typeof decoded === "string" ||
+      !decoded.userId ||
+      typeof decoded.userId !== "string"
+    ) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid token payload",
+      });
     }
 
-    const [ schema, token ] = authHeader.split(" ");
+    // ----------------------------------------------------
+    // 5. Attach authenticated user ID
+    // ----------------------------------------------------
 
-    if(schema !== "Bearer" || !token){
-        return res.status(401).json({
-            success: false,
-            message: "Invalid authorization header",
-        });
-    }
+    req.userId = decoded.userId;
 
-    try{
-        const decoded = jwt.verify(
-            token, 
-            process.env.JWT_SECRET!
-        );
-
-        if(typeof decoded === "string"){
-            return res.status(401).json({
-                success: false,
-                message: "Invalid token payload",
-            });
-        }
-
-        req.userId = decoded.userId as string;
-
-        next();
-        
-    } catch (error){
-        return res.status(401).json({
-            success: false,
-            message: "Invalid or expired token",
-        });
-    }
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid or expired token",
+    });
+  }
 };

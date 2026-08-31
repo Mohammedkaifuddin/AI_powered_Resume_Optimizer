@@ -3,16 +3,26 @@ import cors from "cors";
 import healthRoutes from "./routes/healthroutes";
 import userRoutes from "./routes/userroutes";
 import authRoutes from "./routes/authroutes";
-import resumeRoutes from "./routes/resumeroutes"
+import resumeRoutes from "./routes/resumeroutes";
 import { errormiddleware } from "./middleware/errormiddleware";
-import  jobdescriptionroutes  from "./routes/jobdescriptionroutes";
+import jobdescriptionroutes from "./routes/jobdescriptionroutes";
 import matchingroutes from "./routes/matchingroutes";
 import analysisroutes from "./routes/analysisroutes";
 import geminirotes from "./routes/geminiroutes";
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
+
+const allowedOrigin = process.env.FRONTEND_URL || "http://localhost:3000";
+
+app.use(
+  cors({
+    origin: allowedOrigin,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/health", healthRoutes);
