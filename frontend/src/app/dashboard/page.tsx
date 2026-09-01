@@ -293,7 +293,7 @@ export default function DashboardPage() {
     } catch (error) {
       console.error("Delete resume failed:", error);
 
-      setdeleteerror("Unable to connect to the backend.");
+      setdeleteerror("Unable to connect to the backend server.");
     } finally {
       setdeletingresumeId(null);
     }
