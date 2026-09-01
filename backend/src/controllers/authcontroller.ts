@@ -62,7 +62,7 @@ export const loginuser = async (req: Request, res: Response) => {
     if(!result.success){
         return res.status(400).json({
             success: false,
-            message: "Invalid login data",
+            message: "Invalid login credantials",
             errors: result.error.issues,
         });
     }
