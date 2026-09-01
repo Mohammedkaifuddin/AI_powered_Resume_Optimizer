@@ -19,7 +19,7 @@ An AI-powered full-stack web application that analyzes resumes against job descr
 - Compare previous analyses
 - Delete resumes, job descriptions, and analyses
 - Protected API routes
-- File validation and upload limits
+- File validation and upload limits.
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## 🛠️ Tech Stack
 
